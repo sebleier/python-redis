@@ -1,10 +1,13 @@
 ZSet Datastructure
 ==================
 
-ZSets are a Python datastructure for sorted sets, similar to `Redis`_ sorted sets
-and inspired by `Redis-py`_'s api
+ZSets are a Python datastructure for sorted sets, similar to `Redis`_ sorted
+sets and inspired by `Redis-py`_'s api
 
 Optionally you can use `blist`_ for better perfomance.
+
+Why did I build this, you say? Well..ummm...I dunno.  'Cause I could and it
+was fun?
 
 .. _Redis: https://github.com/antirez/redis
 .. _Redis-py: https://github.com/andymccurdy/redis-py
