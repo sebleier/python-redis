@@ -7,7 +7,7 @@ sets and inspired by `Redis-py`_'s api
 Optionally you can use `blist`_ for better perfomance.
 
 Why did I build this, you say? Well..ummm...I dunno.  'Cause I could and it
-was fun?
+was fun...and stuff?
 
 .. _Redis: https://github.com/antirez/redis
 .. _Redis-py: https://github.com/andymccurdy/redis-py
