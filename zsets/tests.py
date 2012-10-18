@@ -1,5 +1,7 @@
 import unittest
 from zsets.zset import ZSet
+from zsets.hash import Hash
+
 
 class ZSetTestCase(unittest.TestCase):
     def test_zadd(self):
@@ -99,6 +101,88 @@ class ZSetTestCase(unittest.TestCase):
         zset.zadd(a=9, b=7, c=5, d=3, e=1)
         self.assertEqual(zset.zremrangebyrank(3, 10), 2)
         self.assertEqual(zset._scores, [(1, 'e'), (3, 'd'), (5, 'c')])
+
+
+class HashTestCase(unittest.TestCase):
+
+    def test_hset(self):
+        h = Hash()
+        h.hset('a', 'aa')
+        h.hset('b', 'bb')
+        self.assertEqual(h._data, {'a': 'aa', 'b': 'bb'})
+
+    def test_hget(self):
+        h = Hash()
+        h._data = {'a': 'aa', 'b': 'bb'}
+        self.assertEqual(h.hget('a'), 'aa')
+        self.assertEqual(h.hget('b'), 'bb')
+
+    def test_hdel(self):
+        h = Hash()
+        h.hmset({'a': 'aa', 'b': 'bb', 'c': 'cc'})
+        self.assertEqual(h._data, {'a': 'aa', 'b': 'bb', 'c': 'cc'})
+        self.assertEqual(h.hdel('a', 'b'), 2)
+        self.assertEqual(h._data, {'c': 'cc'})
+
+    def test_hexists(self):
+        h = Hash()
+        h.hmset({'a': 'aa', 'b': 'bb', 'c': 'cc'})
+        self.assertTrue(h.hexists('a'))
+        self.assertFalse(h.hexists('z'))
+
+    def test_hgetall(self):
+        h = Hash()
+        h.hmset({'a': 'aa', 'b': 'bb', 'c': 'cc'})
+        self.assertEqual(h.hgetall(), {'a': 'aa', 'b': 'bb', 'c': 'cc'})
+
+    def test_hincrby(self):
+        h = Hash()
+        h.hset('a', 1)
+        self.assertEqual(h.hincrby('a', 2), 3)
+        self.assertEqual(h.hincrby('b'), 1)
+        self.assertEqual(h.hincrby('c', 2), 2)
+
+    def test_hincrbyfloat(self):
+        h = Hash()
+        h.hset('a', 1.0)
+        self.assertEqual(h.hincrby('a', 2.0), 3.0)
+        self.assertEqual(h.hincrby('b'), 1.0)
+        self.assertEqual(h.hincrby('c', 2.0), 2.0)
+
+    def test_hkeys(self):
+        h = Hash()
+        h.hmset({'a': 'aa', 'b': 'bb', 'c': 'cc'})
+        self.assertItemsEqual(h.hkeys(), ['a', 'b', 'c'])
+
+    def test_hlen(self):
+        h = Hash()
+        h.hmset({'a': 'aa', 'b': 'bb', 'c': 'cc'})
+        self.assertEqual(h.hlen(), 3)
+
+    def test_setnx(self):
+        h = Hash()
+        self.assertEqual(h.hsetnx('a', 'aa'), 1)
+        self.assertEqual(h.hget('a'), 'aa')
+        self.assertEqual(h.hsetnx('a', 'zz'), 0)
+        self.assertEqual(h.hget('a'), 'aa')
+        self.assertEqual(h._data, {'a': 'aa'})
+
+    def test_hmset(self):
+        h = Hash()
+        h.hmset({'a': 'aa', 'b': 'bb', 'c': 'cc'})
+        self.assertEqual(h._data, {'a': 'aa', 'b': 'bb', 'c': 'cc'})
+        h.hmset({'a': 'aaa', 'b': 'bbb', 'z': 'zz'})
+        self.assertEqual(h._data, {'a': 'aaa', 'b': 'bbb', 'c': 'cc', 'z': 'zz'})
+
+    def test_hmget(self):
+        h = Hash()
+        h.hmset({'a': 'aa', 'b': 'bb', 'c': 'cc'})
+        self.assertEqual(h.hmget(['c', 'b']), ['cc', 'bb'])
+
+    def test_hvals(self):
+        h = Hash()
+        h.hmset({'a': 'aa', 'b': 'bb', 'c': 'cc'})
+        self.assertItemsEqual(h.hvals(), ['aa', 'bb', 'cc'])
 
 if __name__ == '__main__':
     unittest.main()
