@@ -1,14 +1,14 @@
 from setuptools import setup
 
 setup(
-    name = "zsets",
-    url = "http://github.com/sebleier/python-zsets/",
+    name = "pyredis",
+    url = "http://github.com/sebleier/python-redis/",
     author = "Sean Bleier",
     author_email = "sebleier@gmail.com",
     version = "0.1.0",
-    packages = ["zsets"],
-    description = "Python datastructure for sorted sets, similar to Redis sorted sets and inspired by Redis-py's api",
-    install_requires=[]
+    packages = ["pyredis"],
+    description = "Redis implementation in Python",
+    install_requires=[],
     classifiers = [
         "Programming Language :: Python",
         "Operating System :: OS Independent",

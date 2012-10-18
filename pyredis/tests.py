@@ -1,6 +1,6 @@
 import unittest
-from zsets.zset import ZSet
-from zsets.hash import Hash
+from pyredis.zset import ZSet
+from pyredis.hash import Hash
 
 
 class ZSetTestCase(unittest.TestCase):
