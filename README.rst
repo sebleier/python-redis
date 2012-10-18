@@ -2,7 +2,7 @@
 Python Redis
 ============
 
-An in-process implementation of redis written in Python
+An in-process implementation of `Redis`_ written in Python
 
 Datastructures
 ==============
@@ -10,8 +10,7 @@ Datastructures
 ZSet Datastructure
 ~~~~~~~~~~~~~~~~~~
 
-ZSets are a Python datastructure for sorted sets, similar to `Redis`_ sorted
-sets and inspired by `Redis-py`_'s api
+ZSets are a Python datastructure for sorted sets.
 
 Optionally you can use `blist`_ for better perfomance.
 
