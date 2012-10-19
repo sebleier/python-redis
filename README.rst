@@ -31,7 +31,7 @@ Examples::
 
     >>> h = Hash()
     >>> h.hmset({'a': 'aa', 'b': 'bb', 'c': 'cc'})
-    >>> hmget(['c', 'b'])
+    >>> h.hmget(['c', 'b'])
     ['cc', 'bb']
 
 
