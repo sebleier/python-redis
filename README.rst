@@ -34,6 +34,19 @@ Examples::
     >>> hmget(['c', 'b'])
     ['cc', 'bb']
 
+
+Set Datastructure
+~~~~~~~~~~~~~~~~~
+
+Set datastructure are basically python sets with the redis api
+
+Examples::
+
+    >>> s = Set()
+    >>> s.sadd('a', 'b', 'c')
+    >>> s.smembers()
+    ['a', 'b', 'c']
+
 .. _Redis: https://github.com/antirez/redis
 .. _Redis-py: https://github.com/andymccurdy/redis-py
 .. _blist: http://pypi.python.org/pypi/blist/

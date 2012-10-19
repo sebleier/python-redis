@@ -196,7 +196,7 @@ class SetTestCase(unittest.TestCase):
     def test_scard(self):
         s = Set()
         s.sadd('a', 'b', 'c')
-        self.assertEqual(len(s._set), 3)
+        self.assertEqual(s.scard(), 3)
 
     def test_sismember(self):
         s = Set()
