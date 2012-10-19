@@ -1,6 +1,7 @@
 import unittest
 from pyredis.zset import ZSet
 from pyredis.hash import Hash
+from pyredis.set import Set
 
 
 class ZSetTestCase(unittest.TestCase):
@@ -183,6 +184,63 @@ class HashTestCase(unittest.TestCase):
         h = Hash()
         h.hmset({'a': 'aa', 'b': 'bb', 'c': 'cc'})
         self.assertItemsEqual(h.hvals(), ['aa', 'bb', 'cc'])
+
+
+class SetTestCase(unittest.TestCase):
+    def test_sadd(self):
+       s = Set()
+       self.assertEqual(s.sadd('a', 'b'), 2)
+       self.assertEqual(s.sadd('b', 'c'), 1)
+       self.assertItemsEqual(s._set, set(['a', 'b', 'c']))
+
+    def test_scard(self):
+        s = Set()
+        s.sadd('a', 'b', 'c')
+        self.assertEqual(len(s._set), 3)
+
+    def test_sismember(self):
+        s = Set()
+        s.sadd('a', 'b', 'c')
+        self.assertTrue(s.sismember('a'))
+        self.assertTrue(s.sismember('b'))
+        self.assertTrue(s.sismember('c'))
+        self.assertFalse(s.sismember('z'))
+
+    def test_smembers(self):
+        s = Set()
+        s.sadd('a', 'b', 'c')
+        self.assertItemsEqual(s.smembers(), ['a', 'b', 'c'])
+
+    def test_spop(self):
+        s = Set()
+        s.sadd('a', 'b', 'c')
+        removed = []
+        for i in range(3):
+            removed.append(s.spop())
+        self.assertEqual(s.spop(), None)
+        self.assertItemsEqual(removed, ['a', 'b', 'c'])
+
+    def test_srandmember(self):
+        """ Just sample 3 elements using srandmember and check to make sure
+        they are in the original set.
+        """
+        s = Set()
+        items = ['a', 'b', 'c']
+        s.sadd(*items)
+        for i in range(3):
+            item = s.srandmember()
+            self.assertTrue(item in items, item)
+        items = s.srandmember(2)
+        self.assertTrue(type(items), list)
+        self.assertEqual(len(items), 2)
+
+
+    def test_srem(self):
+        s = Set()
+        s.sadd('a', 'b', 'c')
+        self.assertEqual(s.srem('b', 'c', 'z'), 2)
+        self.assertItemsEqual(s._set, set(['a']))
+
 
 if __name__ == '__main__':
     unittest.main()
