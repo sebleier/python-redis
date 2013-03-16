@@ -1,2 +1,3 @@
 *.pyc
 pyredis.egg-info
+.DS_Store
