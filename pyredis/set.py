@@ -3,8 +3,15 @@ import random
 
 class Set(object):
 
-    def __init__(self):
+    def __init__(self, *values):
         self._set = set()
+        self.sadd(*values)
+
+    def __and__(self, rhs):
+        return self._set & rhs._set
+
+    def __or__(self, rhs):
+        return self._set | rhs._set
 
     def sadd(self, *values):
         "Add ``value(s)`` to set"
